@@ -1,4 +1,5 @@
 # Django settings for panex_web project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -67,6 +68,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    'bootstrap',
 )
 
 # List of finder classes that know how to find static files in
@@ -84,7 +86,7 @@ SECRET_KEY = '!$x3wxv2)gb2fw=bg+8=dzc%v*tmlqicn_myuv7zp*)npn==$-'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,6 +108,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.realpath(os.path.dirname(__file__))+'/templates/',
 )
 
 INSTALLED_APPS = (
