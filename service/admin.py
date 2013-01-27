@@ -4,4 +4,5 @@ from service.models import Service, ServiceRun
 from django.contrib import admin
 
 
-admin.site.register(Service, ServiceRun)
+admin.site.register(Service)
+admin.site.register(ServiceRun)
