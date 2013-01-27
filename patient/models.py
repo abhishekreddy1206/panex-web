@@ -17,7 +17,7 @@ class Patient(models.Model):
 class Disease(models.Model):
     # Disease Constants For now
     DISEASE_CHOICES = (
-        ("CMF", "Cranio-Maxoficial"),
+        ("CMF", "Cranio-Maxofacial"),
         ("BR", "Breast Reconstruction"),
     )
     patient = models.ForeignKey(Patient)
