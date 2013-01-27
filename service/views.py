@@ -8,5 +8,8 @@ from django.template import Context, loader, RequestContext
 
 
 def index(request):
-	return render_to_response('index.html', {},
-                              RequestContext(request))
+	print "[service] Rendering Index Page"
+	return render_to_response('service/index.html', {})
+
+def ip_address_processor(request):
+    return {'ip_address': request.META['REMOTE_ADDR']}

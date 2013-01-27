@@ -6,8 +6,8 @@ from django.utils import simplejson
 import json
 
 def index(request):
-    return render_to_response('index.html', {},
-                              RequestContext(request))
+	print "rendering index for main website"
+	return render_to_response('index.html', {})
 
 def show_json(request):
 	response_data = dict()
