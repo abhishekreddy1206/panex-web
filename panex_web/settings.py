@@ -123,6 +123,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'bootstrap_toolkit',
+    'patient',
+    'service',
 )
 
 # A sample logging configuration. The only tangible logging
