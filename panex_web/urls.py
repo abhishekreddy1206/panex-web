@@ -15,5 +15,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^show_json', 'panex_web.views.show_json'),
-    url(r'^$', 'panex_web.views.index'),
+    url(r'^service/', include('service.urls')),
+    # url(r'^$', 'panex_web.views.index'),
 )
