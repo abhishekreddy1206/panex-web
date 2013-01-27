@@ -22,7 +22,7 @@ class ServiceRun(models.Model):
     )
     service = models.ForeignKey(Service)
     status = models.CharField(
-        max_length=10, choices=SERVICE_STATUS_CHOICES, default=READY)
+        max_length=10, choices=SERVICE_STATUS_CHOICES, default="READY")
     inputParams = models.CharField(max_length=500)
     outputParams = models.CharField(max_length=500)
 
