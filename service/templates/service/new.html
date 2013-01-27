@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>New Service</h1>
+
+{% if error_message %} 
+<div class="alert alert-error">
+	<p><strong>{{ error_message }}</strong></p>
+</div> {% endif %}
+<!-- 
+<form action="/service/" method="post" class="form-horizontal" enctype="multipart/form-data">
+{% csrf_token %}
+
+
+ <div class="control-group">
+    <label class="control-label" for="name">Name</label>
+    <div class="controls">
+      <input type="text" id="name" placeholder="Name">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="description">Description</label>
+    <div class="controls">
+      <textarea rows="3" id="description" placeholder="Description"></textarea>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="command">Command</label>
+    <div class="controls">
+      <input type="text" id="command" placeholder="command">
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label" for="binary">File</label>
+    <div class="controls">
+      <input type="file" id="binary">
+    </div>
+  </div>
+  
+<input type="submit" class="btn btn-primary" value="Create" />
+</form>
+ -->
+  <div>
+        <form method="POST" enctype="multipart/form-data">{%csrf_token%}
+          <table id='id_form_table'>
+            {{ form.as_table }}
+          </table>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+{% endblock %}
