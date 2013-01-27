@@ -15,8 +15,14 @@ class Patient(models.Model):
 
 
 class Disease(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.CharField(max_length=400)
+    # Disease Constants For now
+    DISEASE_CHOICES = (
+        ("CMF", "Cranio-Maxoficial"),
+        ("BR", "Breast Reconstruction"),
+    )
+    patient = models.ForeignKey(Patient)
+    diseaseType = models.CharField(
+        max_length=6, choices=DISEASE_CHOICES, default="CMF")
 
     def __unicode__(self):
         return self.name
