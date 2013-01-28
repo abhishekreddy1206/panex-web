@@ -1,7 +1,33 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
 {% block content %}
-
-This is the service index page
-
+<h2>
+    Service Listing
+</h2>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in all_services %}
+        <tr>
+        	<a href="service/detail">
+            <td>
+                {{row.name}}
+            </td>
+            <td>
+                {{row.description}}
+            </td>
+            </a>
+        </tr>
+        
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
