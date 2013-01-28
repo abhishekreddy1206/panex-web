@@ -1,14 +1,19 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
+{% load bootstrap_toolkit %} 
 {% block content %}
-<h1>New Service</h1>
-
-{% if error_message %} 
+<h2>
+    Create a new service
+</h2>
+{% if error_message %}
 <div class="alert alert-error">
-	<p><strong>{{ error_message }}</strong></p>
-</div> {% endif %}
-<!-- 
-<form action="/service/" method="post" class="form-horizontal" enctype="multipart/form-data">
+    <p>
+        <strong>
+            {{ error_message }}
+        </strong>
+    </p>
+</div>
+{% endif %}
+<!-- <form action="/service/" method="post" class="form-horizontal" enctype="multipart/form-data">
 {% csrf_token %}
 
 
@@ -44,12 +49,12 @@
 <input type="submit" class="btn btn-primary" value="Create" />
 </form>
  -->
-  <div>
-        <form method="POST" enctype="multipart/form-data">{%csrf_token%}
-          <table id='id_form_table'>
-            {{ form.as_table }}
-          </table>
-            <input type="submit" value="Submit" />
-        </form>
-    </div>
+<div>
+    <form method="POST" enctype="multipart/form-data" class="form-horizontal span12">
+        {% csrf_token %} {{ form|as_bootstrap}}
+        <div class="actions">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
 {% endblock %}
