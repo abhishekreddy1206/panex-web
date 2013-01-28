@@ -12,8 +12,8 @@ import os
 
 
 def index(request):
-	print "[service] Rendering Index Page"
-	return render_to_response('service/index.html', {})
+    print "[service] Rendering Index Page"
+    return render_to_response('service/index.html', {})
 
 
 def ip_address_processor(request):
@@ -31,7 +31,7 @@ def new(request):
             name = form.cleaned_data['name']
             desc = form.cleaned_data['description']
             command = form.cleaned_data['command']
-            location = '/tmp/'+request.FILES['file'].name
+            location = '/tmp/' + request.FILES['file'].name
 
             aService = Service(name=name, description=desc, command=command, location=location)
             aService.save()
@@ -40,7 +40,8 @@ def new(request):
         form = ServiceForm()
     return render(request, 'service/new.html', {'form': form})
 
+
 def handle_uploaded_file(uploadedFile):
-    with open('/tmp/'+uploadedFile.name, 'wb+') as destination:
+    with open('/tmp/' + uploadedFile.name, 'wb+') as destination:
         for chunk in uploadedFile.chunks():
             destination.write(chunk)
