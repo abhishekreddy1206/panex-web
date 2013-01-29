@@ -12,8 +12,8 @@ import os
 
 
 def index(request):
-    print "[service] Rendering Index Page"
-    return render_to_response('service/index.html', {})
+    all_services = Service.objects.all()
+    return render(request, 'service/index.html', {'all_services':all_services})
 
 
 def ip_address_processor(request):
