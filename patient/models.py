@@ -13,16 +13,17 @@ class Patient(models.Model):
     def __unicode__(self):
         return self.name
 
-
-class Disease(models.Model):
-    # Disease Constants For now
-    DISEASE_CHOICES = (
+# Can be defined in properties.py
+DISEASE_CHOICES = (
         ("CMF", "Cranio-Maxofacial"),
         ("BR", "Breast Reconstruction"),
-    )
+        )
+
+class Disease(models.Model):
     patient = models.ForeignKey(Patient)
     diseaseType = models.CharField(
         max_length=6, choices=DISEASE_CHOICES, default="CMF")
 
     def __unicode__(self):
-        return self.name
+        disease_hash = dict(DISEASE_CHOICES)
+        return disease_hash[self.diseaseType]
