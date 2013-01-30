@@ -25,11 +25,12 @@ class DivErrorList(ErrorList):
 
 class ServiceStartForm(forms.Form):
     serviceList = service.models.Service.objects.all()
+    print serviceList.count()
     b = {}
     for aService in serviceList:
         b[aService.id] = aService.name
     c = b.items()
-    print c
+    print "Within the form, ", serviceList.count()
     serviceChoice = forms.ChoiceField(choices=c, widget=forms.Select())
     input_directory = forms.CharField(max_length=200)
     output_directory = forms.CharField(max_length=200)
