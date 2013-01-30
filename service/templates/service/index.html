@@ -1,6 +1,16 @@
 {% extends "base.html" %} 
 
 {% block content %}
+{% if error_message %}
+<div class="alert alert-error">
+    <p>
+        <strong>
+            {{ error_message }}
+        </strong>
+    </p>
+</div>
+{% endif %}
+
 <h2>
     Service Listing
 </h2>
@@ -28,9 +38,9 @@
                 {{row.description}}
             </td>
             <td>
-                <a href="service/detail" class="btn btn-blue">Detail</a>
-                <a href="service/detail" class="btn btn-success">Start</a>
-                <a href="service/delete" class="btn btn-danger">Delete</a>
+                <a href="detail" class="btn btn-blue">Detail</a>
+                <a href="start/{{row.id}}" class="btn btn-success">Start</a>
+                <a href="delete" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         {% endfor %}
@@ -57,17 +67,17 @@
         </tr>
     </thead>
     <tbody>
-        {% for row in all_services %}
+        {% for row in running_services %}
         <tr>
             <td>
-                {{row.name}}
+                {{row.service.name}}
             </td>
             <td>
-                {{row.description}}
+                {{row.service.description}}
             </td>
             <td>
-                <a href="service/detail" class="btn btn-success">View Detail</a>
-                <a href="service/delete" class="btn btn-danger">Stop</a>
+                <a href="detail" class="btn btn-success">View Detail</a>
+                <a href="stop/{{row.id}}" class="btn btn-danger">Stop</a>
             </td>
         </tr>
         {% endfor %}

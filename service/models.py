@@ -25,6 +25,7 @@ class ServiceRun(models.Model):
         max_length=10, choices=SERVICE_STATUS_CHOICES, default="READY")
     inputParams = models.CharField(max_length=500)
     outputParams = models.CharField(max_length=500)
+    pid = models.IntegerField(default=-1)
 
     def is_running(self):
         return self.status == RUNNING

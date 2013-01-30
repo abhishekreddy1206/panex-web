@@ -1,4 +1,5 @@
 from django import forms
+import service.models
 from django.forms.util import ErrorList
 
 
@@ -21,3 +22,15 @@ class DivErrorList(ErrorList):
         if not self:
             return u''
         return u'<div class="control-group error">%s</div>' % ''.join([u'<div class="error">%s</div>' % e for e in self])
+
+class ServiceStartForm(forms.Form):
+    serviceList = service.models.Service.objects.all()
+    print serviceList.count()
+    b = {}
+    for aService in serviceList:
+        b[aService.id] = aService.name
+    c = b.items()
+    print "Within the form, ", serviceList.count()
+    serviceChoice = forms.ChoiceField(choices=c, widget=forms.Select())
+    input_directory = forms.CharField(max_length=200)
+    output_directory = forms.CharField(max_length=200)
