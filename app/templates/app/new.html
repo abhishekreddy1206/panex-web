@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% load bootstrap_toolkit %} 
+{% block content %}
+<h2>
+    Create a new App
+</h2>
+
+{% if error_message %}
+<div class="alert alert-error">
+    <p>
+        <strong>
+            {{ error_message }}
+        </strong>
+    </p>
+</div>
+{% endif %}
+
+<div>
+    <form method="POST" enctype="multipart/form-data" class="form-horizontal span12">
+        {% csrf_token %} {{ form|as_bootstrap}}
+        <div class="actions">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -9,7 +9,6 @@ class App(models.Model):
     description = models.CharField(max_length=200)
     location = models.CharField(max_length=400)
     version = models.CharField(max_length=10, default="1.0.0")
-    location = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
     downloads = models.IntegerField(default=0)
 
@@ -17,11 +16,11 @@ class App(models.Model):
         return self.name + "\n" + self.description
 
     def is_updated(self, inputVersion):
-    	if version_checker(self.version, inputVersion) > 0:
+    	if self.version_checker(self.version, inputVersion) > 0:
     		return True
     	return False
 
-    def version_checker(version1, version2):
+    def version_checker(self, version1, version2):
     	def normalize(v):
     		return [int(x) for x in re.sub(r'(\.0+)*$','', v).split(".")]
     	return cmp(normalize(version1), normalize(version2))
