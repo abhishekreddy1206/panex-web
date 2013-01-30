@@ -29,5 +29,5 @@ class App(models.Model):
 # Small test suite to check the version checker function
 # 
 if __name__ == '__main__':
-	assert mycmp('1.1.1.1', '1.1.1.1') == 0
-	assert mycmp('1.1.1.2', '1.1.1.1') == 1
+	assert version_checker('1.1.1.1', '1.1.1.1') == 0
+	assert version_checker('1.1.1.2', '1.1.1.1') == 1
