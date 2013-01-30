@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
      'patient',
     'service',
+    'app',
     'bootstrap_toolkit',
 )
 
