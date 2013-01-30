@@ -5,5 +5,6 @@ from service.models import Service, ServiceRun
 
 urlpatterns = patterns('',
 	url(r'^new$', 'service.views.new'),
+	url(r'^start$', 'service.views.start'),
     url(r'^$', 'service.views.index'),
 )
