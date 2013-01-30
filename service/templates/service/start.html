@@ -2,6 +2,16 @@
 {% load bootstrap_toolkit %} 
 {% block content %}
 
+{% if error_message %}
+<div class="alert {{alert_class}}">
+    <p>
+        <strong>
+            {{ error_message }}
+        </strong>
+    </p>
+</div>
+{% endif %}
+
 <h2>Start a Service</h2>
 <div>
     <form method="POST"  class="form-horizontal span12">

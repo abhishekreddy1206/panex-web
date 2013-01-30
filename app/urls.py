@@ -7,5 +7,6 @@ urlpatterns = patterns('',
 	url(r'^download/(?P<id>\d+)/$', 'app.views.download'),
 	# HTML
 	url(r'^new/$', 'app.views.new'),
+	url(r'^delete/(?P<id>\d+)/$', 'app.views.delete'),
 	url(r'^$', 'app.views.index'),
 )

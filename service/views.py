@@ -115,6 +115,7 @@ def stop(request, id):
         error_message = "Stopped"
     else:
         error_message = "Can't Stop the process , check the logs"
+        alert_class = 'alert-error'
     all_services = Service.objects.all()
     running_services = ServiceRun.objects.all().filter(status="RUNNING")
     return render(request, 'service/index.html', locals())

@@ -1,23 +1,15 @@
 #
 # Copyright (c) 2013 by Mohit Singh kanwal.  All Rights Reserved.
 #
-from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.core import serializers
-from django.http import Http404
-from django.shortcuts import render_to_response, get_object_or_404, render
-from django.template import Context, loader, RequestContext
-from django import forms
-from app.models import App
-from app.forms import AppForm
-from panex_web import config
-
-import os
-import signal
-import subprocess
-import logging
 import json
-
+import os
+from app.forms import AppForm
+from app.models import App
+from django.core import serializers
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from panex_web import config
+from django.contrib import messages
 
 def index(request):
     apps = App.objects.all()
@@ -32,6 +24,7 @@ def ensure_dir(f):
 
 def handle_uploaded_file(uploadedFile):
     CONFIG = config
+    # Ensure that APP_DIR exists
     ensure_dir(CONFIG.APP_DIRECTORY)
     with open(CONFIG.APP_DIRECTORY + uploadedFile.name, 'wb+') as destination:
         for chunk in uploadedFile.chunks():
@@ -49,6 +42,13 @@ def update(request):
     all_apps = App.objects.all()
     return HttpResponse(serializers.serialize('json',all_apps), content_type="application/json")
 
+def delete(request, id):
+    CONFIG = config
+    existingApp = App.objects.get(pk=id)
+    existingApp.delete()
+    error_message = "Successfully Deleted"
+    alert_class = "alert-success"
+    return HttpResponseRedirect('/app/')
 
 def new(request):
     CONFIG = config
@@ -64,7 +64,7 @@ def new(request):
             anApp = App(name=name, description=desc, version=version, location=location, author=author)
             anApp.save()
 
-            error_message = "Successfully Created."
+            messages.add_message(request, messages.SUCCESS, 'Successfully Created')
             return HttpResponseRedirect('/app/')
     else:
         form = AppForm()

@@ -4,15 +4,12 @@
 <h2>
     Create a new App
 </h2>
-
-{% if error_message %}
-<div class="alert alert-error">
-    <p>
-        <strong>
-            {{ error_message }}
-        </strong>
-    </p>
-</div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
 
 <div>
