@@ -13,7 +13,8 @@ import os
 
 def index(request):
     all_services = Service.objects.all()
-    return render(request, 'service/index.html', {'all_services':all_services})
+    running_services = ServiceRun.objects.all()
+    return render(request, 'service/index.html', locals())
 
 
 def ip_address_processor(request):
@@ -51,15 +52,16 @@ def start(request):
         form = ServiceStartForm(request.POST)
         if form.is_valid():
             print "Handling a valid form"
-            # name = form.cleaned_data['name']
-            # desc = form.cleaned_data['description']
-            # command = form.cleaned_data['command']
-            # location = '/tmp/' + request.FILES['file'].name
+            service_id = form.cleaned_data['serviceChoice']
+            input_dir = form.cleaned_data['input_directory']
+            output_dir = form.cleaned_data['output_directory']
 
-            # aService = Service(name=name, description=desc, command=command, location=location)
-            # aService.save()
+            aEntry = Service.objects.get(pk=service_id)
+            aServiceRun = ServiceRun(service=aEntry, inputParams=input_dir, outputParams=output_dir)
+            aServiceRun.save()
+            ## Add some flash message
             return HttpResponseRedirect('/service/')
     else:
         form = ServiceStartForm()
         print "Invalid form, not a POST request"
-    return render(request, 'service/start.html', {'form': form})
+    return render(request, 'service/start.html', locals())

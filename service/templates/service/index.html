@@ -57,13 +57,13 @@
         </tr>
     </thead>
     <tbody>
-        {% for row in all_services %}
+        {% for row in running_services %}
         <tr>
             <td>
-                {{row.name}}
+                {{row.service.name}}
             </td>
             <td>
-                {{row.description}}
+                {{row.service.description}}
             </td>
             <td>
                 <a href="service/detail" class="btn btn-success">View Detail</a>
