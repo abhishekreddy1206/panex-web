@@ -3,6 +3,7 @@
 #
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.core import serializers
 from django.http import Http404
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.template import Context, loader, RequestContext
@@ -16,6 +17,7 @@ import signal
 import subprocess
 import logging
 import json
+
 
 def index(request):
     apps = App.objects.all()
@@ -35,13 +37,16 @@ def handle_uploaded_file(uploadedFile):
         for chunk in uploadedFile.chunks():
             destination.write(chunk)
 
-"""Returns JSON Data"""
+def download(request, id):
+    response_data = dict()
+    response_data['result'] = 'failed'
+    response_data['message'] = 'you messed up'
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
 def update(request):
-	CONFIG = config
-	response_data = dict()
-	response_data['result'] = 'failed'
-	response_data['message'] = 'you messed up'
-	return HttpResponse(json.dumps(response_data), content_type="application/json")
+    CONFIG = config
+    all_apps = App.objects.all()
+    return HttpResponse(serializers.serialize('json',all_apps), content_type="application/json")
 
 
 def new(request):
