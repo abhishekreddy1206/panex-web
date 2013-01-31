@@ -38,6 +38,7 @@ def handle_uploaded_file(uploadedFile):
             destination.write(chunk)
 
 def download(request, id):
+    ## TODO: add proper streaming of bits of the correct software
     response_data = dict()
     response_data['result'] = 'failed'
     response_data['message'] = 'you messed up'
