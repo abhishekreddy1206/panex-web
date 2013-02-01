@@ -46,8 +46,7 @@ def delete(request, id):
     CONFIG = config
     existingApp = App.objects.get(pk=id)
     existingApp.delete()
-    error_message = "Successfully Deleted"
-    alert_class = "alert-success"
+    messages.add_message(request, messages.SUCCESS, 'Successfully Deleted')
     return HttpResponseRedirect('/app/')
 
 def new(request):

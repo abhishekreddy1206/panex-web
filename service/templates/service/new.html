@@ -5,15 +5,7 @@
     Create a new service
 </h2>
 
-{% if error_message %}
-<div class="alert {{alert_class}}">
-    <p>
-        <strong>
-            {{ error_message }}
-        </strong>
-    </p>
-</div>
-{% endif %}
+{% include "messages.html" %}
 
 <div>
     <form method="POST" enctype="multipart/form-data" class="form-horizontal span12">

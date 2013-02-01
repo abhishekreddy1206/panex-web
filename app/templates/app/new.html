@@ -4,13 +4,8 @@
 <h2>
     Create a new App
 </h2>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+
+{% include "messages.html" %}
 
 <div>
     <form method="POST" enctype="multipart/form-data" class="form-horizontal span12">
