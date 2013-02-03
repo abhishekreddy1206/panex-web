@@ -94,7 +94,7 @@ def download(request, id):
 def update(request):
     CONFIG = config
     all_apps = App.objects.all()
-    return HttpResponse(serializers.serialize('json', all_apps), content_type="application/json")
+    return HttpResponse(serializers.serialize('json', all_apps), content_type="application/json", status=200)
 
 
 def delete(request, id):
