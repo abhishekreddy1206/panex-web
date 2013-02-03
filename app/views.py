@@ -83,6 +83,8 @@ def download(request, id):
     existingApp = App.objects.get(pk=id)
     path_of_file = existingApp.location
     # return send_file(request, path_of_file)
+    existingApp.downloads = existingApp.downloads+1
+    existingApp.save()
     return send_zipfile(request, path_of_file)
     # response = HttpResponse(FileWrapper(myfile), content_type='application/zip')
     # response['Content-Disposition'] = 'attachment; filename=myfile.zip'
