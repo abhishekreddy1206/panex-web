@@ -17,5 +17,6 @@ urlpatterns = patterns('',
     url(r'^show_json', 'panex_web.views.show_json'),
     url(r'^$', 'panex_web.views.index'),
     url(r'^service/', include('service.urls')),
-
+    url(r'^app/', include('app.urls')),
+    url(r'^patient/', include('patient.urls')),
 )

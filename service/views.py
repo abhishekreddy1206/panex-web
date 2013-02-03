@@ -7,6 +7,7 @@ from service.models import Service, ServiceRun
 from django.template import Context, loader, RequestContext
 from django import forms
 from service.forms import ServiceForm, ServiceStartForm 
+from django.contrib import messages
 
 import os
 import signal
@@ -59,7 +60,7 @@ def new(request):
             aService = Service(name=name, description=desc, command=command, location=location)
             aService.save()
             # Run the service in the background
-            
+            messages.add_message(request, messages.SUCCESS, 'Successfully Created')
             return HttpResponseRedirect('/service/')
     else:
         form = ServiceForm()
@@ -86,7 +87,7 @@ def start(request,id):
             aServiceRun.save()
 
             # elevate permissions in order to run
-            p = subprocess.call(["chmod", "a+x", aServiceRun.service.location])
+            subprocess.call(["chmod", "a+x", aServiceRun.service.location])
 
             process = subprocess.Popen(aServiceRun.service.location, shell=False)
             # process = subprocess.Popen("mvim", shell=False)
@@ -95,7 +96,7 @@ def start(request,id):
             aServiceRun.status="RUNNING"
             aServiceRun.pid = process.pid
             aServiceRun.save()
-            ## TODO: Add some flash message
+            messages.add_message(request, messages.SUCCESS, 'Successfully Started')
             return HttpResponseRedirect('/service/')
     else:
         form = ServiceStartForm()
@@ -114,7 +115,7 @@ def stop(request, id):
         runningService.save()
         error_message = "Stopped"
     else:
-        error_message = "Can't Stop the process , check the logs"
+        messages.add_message(request, messages.ERROR, 'Cant stop the service check the logs')
     all_services = Service.objects.all()
     running_services = ServiceRun.objects.all().filter(status="RUNNING")
     return render(request, 'service/index.html', locals())
