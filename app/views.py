@@ -10,6 +10,52 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from panex_web import config
 from django.contrib import messages
+from django.core.servers.basehttp import FileWrapper
+
+import os
+import tempfile
+import zipfile
+
+# Utilities #
+def get_file_name(filePath):
+    head, tail = os.path.split(filePath)
+    return tail
+# End Utilities
+
+def send_file(request, filePath):
+    """
+    Send a file through Django without loading the whole file into
+    memory at once. The FileWrapper will turn the file object into an
+    iterator for chunks of 8KB.
+    """
+    filename = filePath  # Select your file here.
+    wrapper = FileWrapper(file(filename))
+    response = HttpResponse(wrapper, content_type='text/plain')
+    response['Content-Length'] = os.path.getsize(filename)
+    return response
+
+
+def send_zipfile(request, filePath):
+    """
+    Create a ZIP file on disk and transmit it in chunks of 8KB,
+    without loading the whole file into memory. A similar approach can
+    be used for large dynamic PDF files.
+    """
+    temp = tempfile.TemporaryFile()
+    archive = zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED)
+    filename = filePath
+    archive.write(filename, get_file_name(filePath))
+    # for index in range(10):
+    #     filename = filePath  # Select your files here.
+    #     archive.write(filename, 'file%d.txt' % index)
+    archive.close()
+    wrapper = FileWrapper(temp)
+    response = HttpResponse(wrapper, content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename=test.zip'
+    response['Content-Length'] = temp.tell()
+    temp.seek(0)
+    return response
+
 
 def index(request):
     apps = App.objects.all()
@@ -30,17 +76,23 @@ def handle_uploaded_file(uploadedFile):
         for chunk in uploadedFile.chunks():
             destination.write(chunk)
 
+
 def download(request, id):
-    ## TODO: add proper streaming of bits of the correct software
-    response_data = dict()
-    response_data['result'] = 'failed'
-    response_data['message'] = 'you messed up'
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+    CONFIG = config
+    existingApp = App.objects.get(pk=id)
+    path_of_file = existingApp.location
+    # return send_file(request, path_of_file)
+    return send_zipfile(request, path_of_file)
+    # response = HttpResponse(FileWrapper(myfile), content_type='application/zip')
+    # response['Content-Disposition'] = 'attachment; filename=myfile.zip'
+    # return response
+
 
 def update(request):
     CONFIG = config
     all_apps = App.objects.all()
-    return HttpResponse(serializers.serialize('json',all_apps), content_type="application/json")
+    return HttpResponse(serializers.serialize('json', all_apps), content_type="application/json")
+
 
 def delete(request, id):
     CONFIG = config
@@ -48,6 +100,7 @@ def delete(request, id):
     existingApp.delete()
     messages.add_message(request, messages.SUCCESS, 'Successfully Deleted')
     return HttpResponseRedirect('/app/')
+
 
 def new(request):
     CONFIG = config

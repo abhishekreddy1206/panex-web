@@ -5,10 +5,13 @@
 # 
 # 
 # Default directory to store apps
-APP_DIRECTORY = '/tmp/app/'
+
+PANEX_HOME_DIRECTORY = '/panex'
+
+APP_DIRECTORY = PANEX_HOME_DIRECTORY + '/app/'
 
 # Default directory to store services
-SERVICE_DIRECTORY = '/tmp/service/'
+SERVICE_DIRECTORY = PANEX_HOME_DIRECTORY +'/service/'
 
 # define utility functions
 
