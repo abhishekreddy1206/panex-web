@@ -9,11 +9,14 @@
 </h2>
 
 <div>
-    <a href="new" class="btn btn-success">
+    <p>
+        <a href="new" class="btn btn-success">
         <i class="icon-plus icon-white"></i>&nbsp;&nbsp;Create</a>
+    </p>
 </div>
 
-<table class="table table-striped table-bordered table-hover">
+<div>
+    <table class="table table-striped table-bordered table-hover">
     <thead>
         <tr>
             <th class="span2">
@@ -50,7 +53,7 @@
             </td>
             <td>
                 <a href="detail" class="btn btn-blue">Detail</a>
-                <a href="start/{{row.id}}" class="btn btn-success">Start</a>
+                <a href="download/{{row.id}}" class="btn btn-success">Download</a>
                 <a href="delete/{{row.id}}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
@@ -58,5 +61,6 @@
     </tbody>
 </table>
 
+</div>
 {% endblock %}
 
