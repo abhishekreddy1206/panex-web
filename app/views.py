@@ -11,6 +11,7 @@ from django.shortcuts import render
 from panex_web import config
 from django.contrib import messages
 from django.core.servers.basehttp import FileWrapper
+from django.core.urlresolvers import reverse
 
 import os
 import tempfile
@@ -113,7 +114,10 @@ def new(request):
             author = form.cleaned_data['author']
             version = form.cleaned_data['version']
             location = CONFIG.APP_DIRECTORY + request.FILES['file'].name
+            
             anApp = App(name=name, description=desc, version=version, location=location, author=author)
+            anApp.save()
+            anApp.downloadLink = request.build_absolute_uri(reverse('app.views.download', kwargs={'id':anApp.id}))
             anApp.save()
 
             messages.add_message(request, messages.SUCCESS, 'Successfully Created')
