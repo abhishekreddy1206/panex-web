@@ -113,7 +113,7 @@ def stop(request, id):
         runningService.pid = -1
         runningService.status = "STOPPED"
         runningService.save()
-        error_message = "Stopped"
+        messages.add_message(request, messages.SUCCESS, 'Service Successfully Stopped')
     else:
         messages.add_message(request, messages.ERROR, 'Cant stop the service check the logs')
     all_services = Service.objects.all()
