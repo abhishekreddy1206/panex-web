@@ -12,6 +12,7 @@ from patient.models import Patient, Disease
 from datetime import date
 import time
 import json
+import dicom
 
 def index(request):
 	CONFIG = config
