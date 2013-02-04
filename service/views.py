@@ -8,6 +8,7 @@ from django.template import Context, loader, RequestContext
 from django import forms
 from service.forms import ServiceForm, ServiceStartForm 
 from django.contrib import messages
+from panex_web import config
 
 import os
 import signal
@@ -119,3 +120,9 @@ def stop(request, id):
     all_services = Service.objects.all()
     running_services = ServiceRun.objects.all().filter(status="RUNNING")
     return render(request, 'service/index.html', locals())
+
+def detail(request, id):
+    """Detail of  a service, including logs"""
+    CONFIG = config
+    runningService = ServiceRun.objects.get(pk=id)
+    return render(request, 'service/detail.html', locals())
