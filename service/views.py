@@ -9,6 +9,7 @@ from django import forms
 from service.forms import ServiceForm, ServiceStartForm 
 from django.contrib import messages
 from panex_web import config
+from service.globals import ProcessManager
 
 import os
 import signal
@@ -97,6 +98,11 @@ def start(request,id):
             aServiceRun.status="RUNNING"
             aServiceRun.pid = process.pid
             aServiceRun.save()
+            
+            # Add to the hashtable
+            ProcessManager.get_instance().set_process(aServiceRun.pid, process)
+            print ProcessManager.get_process_dict()
+            
             messages.add_message(request, messages.SUCCESS, 'Successfully Started')
             return HttpResponseRedirect('/service/')
     else:
@@ -107,10 +113,16 @@ def start(request,id):
 def stop(request, id):
     """Stops a service"""
     runningService = ServiceRun.objects.get(pk=id)
-    ret = subprocess.call(["kill", "-9", "%d" % runningService.pid])
+    # ret = subprocess.call(["kill", "-9", "%d" % runningService.pid])
     # ret = os.killpg(runningService.pid, signal.SIGTERM)
-     
-    if ret == 0:
+    process =  ProcessManager.get_instance().get_process(runningService.pid)
+    # Kill the process
+    p = process.terminate()
+    process.wait()
+    x = process.poll()
+    ret = process.returncode
+    
+    if ret is not None:
         runningService.pid = -1
         runningService.status = "STOPPED"
         runningService.save()
